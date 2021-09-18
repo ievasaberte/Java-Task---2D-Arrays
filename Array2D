@@ -1,0 +1,111 @@
+import java.util.Random;
+import java.util.Scanner;
+
+public class Array2D {
+	
+	public static void main(String[] args) {
+		//Get random array length 3 to 6
+		Random random = new Random();
+		int arrayLength = random.nextInt(4) + 3;
+		
+		//Create 2D array
+		int[][] array = new int[arrayLength][arrayLength];
+		System.out.println("Izveidots " + arrayLength + "x" + arrayLength+ " masivs");
+		System.out.println();
+		
+		//Let user decide ti input manual values or fill with random values
+		boolean manualInput = getUseManualInput();
+		
+		//Fill array
+		for (int i = 0; i < array.length; i++) {
+			for (int j = 0; j < array.length; j++) {
+				if (manualInput) {
+					//Get value from user input
+					array[i][j] = getUserInputValue("Masiva vertibas [" + i + "][" + j + "] =");
+				}
+				else
+				{
+					//Fill with random value 1 to 100
+					array[i][j] = random.nextInt(100) + 1;
+				}
+			}
+		}
+		
+		//Output array values
+		System.out.println();
+		System.out.println("2D masiva vertibas: ");
+		outputArray(array);
+		
+		//Transform array to diagonal matrix
+		for (int i = 0; i < array.length; i++) {
+			for (int j = 0; j < array.length; j++) {
+				if (i != j) {
+					array[i][j] = 0;
+				}
+			}
+		}
+		
+		//Output array values
+		System.out.println();
+		System.out.println("Diagonales matricas vertibas: ");
+		outputArray(array);
+	}
+	
+	private static boolean getUseManualInput()
+	{
+		System.out.println("Ievadiet A lai aizpilditu masivu vertibu manuali");
+		System.out.println("Ievadiet B lai aizpilditu masivu ar nejausam vertibam");
+		
+		while (true)
+		{
+			Scanner scanner = new Scanner(System.in);
+			String inputValue = scanner.nextLine();
+			
+			if (inputValue.toUpperCase().equals("A")) {
+				return true;
+			}
+			else if (inputValue.toUpperCase().equals("B")) {
+				return false;
+			}
+			else
+			{
+				System.out.println("Ievadiet A vai B");
+			}
+		}
+	}
+	
+	private static int getUserInputValue(String prefix)
+	{
+		while (true)
+		{
+			System.out.print(prefix);
+			Scanner scanner = new Scanner(System.in);
+			if (scanner.hasNextInt()) {
+				
+				int inputValue = scanner.nextInt();
+				return inputValue;
+			}
+			else
+			{
+				System.out.println("Ievadita vertiba nav vesels skaitlis");
+				System.out.println();
+			}
+		}
+	}
+	
+	private static void outputArray(int[][] array)
+	{
+		for (int i = 0; i < array.length; i++) {
+			for (int j = 0; j < array.length; j++) {
+				System.out.print(array[i][j] + " ");
+				if (array[i][j] < 10) {
+					System.out.print(" ");
+				}
+				if (array[i][j] < 100) {
+					System.out.print(" ");
+				}
+			}
+			System.out.println();
+		}
+	}
+}
